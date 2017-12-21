@@ -8,7 +8,7 @@ defmodule Egndf.Api.Base do
   def send_get(path) do
     path
     |> get_uri
-    |> get(get_req_headers!)
+    |> get(get_req_headers!())
     |> normalize_resp
     |> decode_request_body
   end
@@ -23,7 +23,7 @@ defmodule Egndf.Api.Base do
   def send_post({:ok, params}, path) do
     path
     |> get_uri
-    |> post(params, get_req_headers!)
+    |> post(params, get_req_headers!())
     |> normalize_resp
   end
 
@@ -36,8 +36,8 @@ defmodule Egndf.Api.Base do
   end
 
   defp get_req_headers! do
-    case Confex.get_map(:egndf, :auth, []) do
-      [app_id: app_id, consumer_client_id: user, consumer_client_secret: pwd] ->
+    case Confex.fetch_env(:egndf, :auth) do
+      {:ok, [app_id: app_id, consumer_client_id: user, consumer_client_secret: pwd]} ->
         [{"Content-Type", "application/json"},
          {"X-Application", app_id},
          {"Authorization", "Basic " <> Base.encode64(user <> ":" <> pwd)}
@@ -86,8 +86,8 @@ defmodule Egndf.Api.Base do
   end
 
   defp get_uri(path) do
-    case Confex.get(:egndf, :api_url, nil) do
-      uri when is_binary(uri) ->
+    case Confex.fetch_env(:egndf, :api_url) do
+      {:ok, uri} when is_binary(uri) ->
         uri <> path
       _ ->
         raise "Undefined config :api_url for :egndf"
