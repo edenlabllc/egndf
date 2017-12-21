@@ -35,7 +35,7 @@ defmodule Egndf.Mixfile do
       {:httpoison, "~> 0.13.0"},
       {:poison, "~> 3.1"},
       {:confex, ">= 0.0.0"},
-      {:dogma, "~> 0.1", runtime: false},
+      {:dogma, ">= 0.1.12", runtime: false},
       {:credo, ">= 0.8.1", runtime: false},
       {:ex_doc, ">= 0.0.0", runtime: false}
     ]
