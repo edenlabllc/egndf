@@ -1,12 +1,12 @@
 defmodule Egndf.Mixfile do
   use Mix.Project
 
-  @version "0.2.2"
+  @version "0.3.0"
 
   def project do
     [app: :egndf,
      version: @version,
-     elixir: "~> 1.3",
+     elixir: "~> 1.5",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      description: description(),
@@ -31,12 +31,14 @@ defmodule Egndf.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:httpoison, "~> 0.10.0"},
-     {:poison, "~> 2.2"},
-     {:confex, ">= 0.0.0"},
-     {:dogma, "~> 0.1", only: [:dev, :test]},
-     {:credo, "~> 0.4", only: [:dev, :test]},
-     {:ex_doc, ">= 0.0.0", only: :dev}]
+    [
+      {:httpoison, "~> 0.13.0"},
+      {:poison, "~> 3.1"},
+      {:confex, ">= 0.0.0"},
+      {:dogma, "~> 0.1", runtime: false},
+      {:credo, ">= 0.8.1", runtime: false},
+      {:ex_doc, ">= 0.0.0", runtime: false}
+    ]
   end
 
   defp description do
